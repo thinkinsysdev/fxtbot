@@ -33,7 +33,10 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
 .matches('None', (session, args) => {
-    session.send('Hi! This is the None intent handler. You said: \'%s\'.', session.message.text);
+    session.send('Hi! This is the simple intent handler which returns your text. You said: \'%s\'.', session.message.text);
+})
+.matches('getCurrency', (session, args) => {
+    session.send("Hi, The currency that you asked for is: \'%s\'.", session.message.text);
 })
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
