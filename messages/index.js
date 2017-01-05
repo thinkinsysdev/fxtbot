@@ -37,8 +37,8 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
     console.log(session.message.text);
     var reqText = session.message.text;
-     var symbolText = "USD,EUR";
-      var  symbol = "EUR";
+     var base = "EUR";
+      var  symbol = "USD";
       var pairText = "EURUSD";
       var found = false;
 
@@ -48,36 +48,57 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
 
     if ( reqText.indexOf("GBPUSD") >= 0) {
-        symbolText = "USD,GBP";
         pairText = "GBPUSD";
-        symbol = "GBP";
+        base = "GBP";
+        symbol = "USD"
         found = true;
     } else if (reqText.indexOf ("EURUSD") >= 0 )
     {
-        symbolText = "USD,EUR";
+        base="EUR";
         pairText = "EURUSD";
-        symbol = "EUR";
+        symbol = "USD";
         found = true;
     } else if (reqText.indexOf ("NZDUSD") >= 0 )
     {
-        symbolText = "USD,NZD";
+        base = "NZD";
         pairText = "NZDUSD";
-        symbol = "NZD";
+        symbol = "USD";
         found = true;
     } else if (reqText.indexOf ("AUDUSD") >= 0 )
     {
-        symbolText = "USD,AUD";
+        base = "AUD";
         pairText = "AUDUSD";
-        symbol = "AUD";
+        symbol = "USD";
+        found = true;
+    }
+    else if (reqText.indexOf ("USDCHF") >= 0 )
+    {
+        base = "USD";
+        pairText = "USDCHF";
+        symbol = "CHF";
+        found = true;
+    }
+    else if (reqText.indexOf ("USDCAD") >= 0 )
+    {
+        base = "USD";
+        pairText = "USDCAD";
+        symbol = "CAD";
+        found = true;
+    }
+     else if (reqText.indexOf ("USDJPY") >= 0 )
+    {
+        base = "USD";
+        pairText = "USDJPY";
+        symbol = "JPY";
         found = true;
     }
 
-    console.log (" Symbol Text : " + symbolText);
+    console.log (" Symbol Text : " + base+symbol);
 
     var client = clients.createJsonClient({
         url: 'http://api.fixer.io'
     });
-  client.get('/latest?symbols=' + symbolText + '&base=USD', function (err, req, res, obj) {
+  client.get('/latest?symbols=' + symbol + '&base=' + base, function (err, req, res, obj) {
   //  client.get('/latest?symbols=USD,GBP', function (err, req, res, obj) {
  // assert.ifError(err);
  // console.log('Server returned: %j', obj.base);
@@ -102,7 +123,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     session.send("Hi, Simple Intent triggered: \'%s\'.", session.message.text);
 })
 .matches('None', (session, args) => {
-    session.send('You said: \'%s\'.', session.message.text);
+    session.send('You typed in: \'%s\'.', session.message.text);
 })
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
