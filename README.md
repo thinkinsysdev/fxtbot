@@ -1,0 +1,2 @@
+# fxtbot
+FXT Bot Currency
