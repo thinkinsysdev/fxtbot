@@ -38,6 +38,9 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('getCurrency', (session, args) => {
     session.send("Hi, The currency that you asked for is: \'%s\'.", session.message.text);
 })
+.matches('Simple', (session, args) => {
+    session.send("Hi, Simple Intent triggered: \'%s\'.", session.message.text);
+})
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 });
